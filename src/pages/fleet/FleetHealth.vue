@@ -46,8 +46,14 @@
         },
       ]
   )
+  const activeName = ref('first')
+  const serviceDialog = ref(true)
 
+  const check_by_part = ref({})
 
+  const toggleServiceDialog = ()=>{
+    serviceDialog.value = !serviceDialog.value
+  }
 
   const max = ref(0)
   const value = ref(0)
@@ -72,19 +78,92 @@
 <template>
 
   <div class="flex flex-col gap-4">
-<!--    <el-select-->
-<!--        v-model="formData.vehicle"-->
-<!--        placeholder="Select Vehicle"-->
-<!--        size="large"-->
-<!--        style="width: 240px"-->
-<!--    >-->
-<!--      <el-option-->
-<!--          v-for="item in fleet"-->
-<!--          :key="item.value"-->
-<!--          :label="item.label"-->
-<!--          :value="item.value"-->
-<!--      />-->
-<!--    </el-select>-->
+
+    <el-dialog v-model="serviceDialog" title="Shipping address" class="sm:w-[350px] md:w-[800px]">
+      <template #header>
+        <el-tabs
+            v-model="activeName"
+            type="card"
+            class="demo-tabs"
+            @tab-click="handleClick"
+        >
+          <el-tab-pane label="History Of Service" name="first">
+            <div class="flex flex-col gap-4">
+              <el-tag type="success" size="large" class="w-fit">Engine is Healthy</el-tag>
+
+              <el-date-picker
+                  v-model="value"
+                  type="daterange"
+                  start-placeholder="Start date"
+                  end-placeholder="End date"
+              />
+
+              <p>Previous Dates of service</p>
+
+              <el-table :data="tableData" border style="width: 100%">
+                <el-table-column prop="prev_date" label="Begin Date" width="180" />
+                <el-table-column prop="end_date" label="End Date" width="180" />
+                <el-table-column prop="notes" label="Notes" />
+              </el-table>
+
+            </div>
+          </el-tab-pane>
+
+          <el-tab-pane label="Service +" name="second">
+            <div class="flex flex-col gap-4">
+
+              <h3 class="font-semibold text-lg">Fill service details</h3>
+
+              <el-form label-position="top">
+                <el-form-item label="Vehicle">
+                  <el-select
+                      v-model="formData.vehicle"
+                      placeholder="Select Vehicle"
+                      size="large"
+                      style="width: 200px"
+                  >
+                    <el-option
+                        v-for="item in fleet"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                    />
+                  </el-select>
+                </el-form-item>
+
+                <el-form-item label="Service Type">
+                  <el-select
+                      v-model="formData.vehicle"
+                      placeholder="Select Vehicle"
+                      size="large"
+                      style="width: 200px"
+                  >
+                    <el-option
+                        v-for="item in fleet"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                    />
+                  </el-select>
+                </el-form-item>
+
+                <el-form-item label="Next Service Date">
+                  <el-date-picker
+                      v-model="value1"
+                      type="date"
+                      placeholder="Pick a day"
+                      size="large"
+                  />
+                </el-form-item>
+
+
+
+              </el-form>
+            </div>
+          </el-tab-pane>
+        </el-tabs>
+      </template>
+    </el-dialog>
 
     <div class="w-full py-2 px-4 flex justify-between items-center bg-white rounded">
       <el-tag size="large" type="success" class="text-md">Your Moti is Healthy</el-tag>
@@ -105,6 +184,7 @@
       <el-scrollbar ref="scrollbarRef"  height="450px" always @scroll="scroll">
         <div ref="innerRef" class="flex flex-wrap gap-4" >
           <el-card v-for="item in vehicleParts"
+                   @click="toggleServiceDialog"
               class="box-card w-[200px] cursor-pointer">
             <template #header>
               <div class="flex items-start flex-col justify-start gap-2">
