@@ -102,10 +102,10 @@
                 class="w-[400px]"
                 placeholder="Search Vehicle Part" clearable />
 
-      <el-scrollbar ref="scrollbarRef"  height="350px" always @scroll="scroll">
+      <el-scrollbar ref="scrollbarRef"  height="450px" always @scroll="scroll">
         <div ref="innerRef" class="flex flex-wrap gap-4" >
           <el-card v-for="item in vehicleParts"
-              class="box-card w-[250px] cursor-pointer">
+              class="box-card w-[200px] cursor-pointer">
             <template #header>
               <div class="flex items-start flex-col justify-start gap-2">
                 <span class="font-bold">{{item?.name}}</span>
