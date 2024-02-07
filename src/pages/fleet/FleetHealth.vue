@@ -47,7 +47,7 @@
       ]
   )
   const activeName = ref('first')
-  const serviceDialog = ref(true)
+  const serviceDialog = ref(false)
 
   const check_by_part = ref({})
 
