@@ -42,7 +42,7 @@ const fleet = ref([
       <el-main style="padding: 7px">
         <div class="bg-gray-100 w-full h-full rounded p-4">
 
-          <div class="flex items-center py-2 justify-between w-full">
+          <div class="flex flex-wrap items-center py-2 justify-between w-full">
             <div class="flex flex-col w-fit h-fit">
               <p class="font-bold text-lg">Hello Eugene ,</p>
 
