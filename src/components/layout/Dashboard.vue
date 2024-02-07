@@ -42,8 +42,16 @@ const fleet = ref([
       <el-main style="padding: 7px">
         <div class="bg-gray-100 w-full h-full rounded p-4">
 
+          <div class="w-full p-1 flex justify-end items-center ">
+            <span class="cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+              </svg>
+            </span>
+          </div>
+
           <div class="flex flex-wrap items-center py-2 justify-between w-full">
-            <div class="flex flex-col w-fit h-fit">
+            <div class="flex-col w-fit h-fit sm:hidden md:flex">
               <p class="font-bold text-lg">Hello Eugene ,</p>
 
               <p class="text-gray-600 ">We are happy to have you</p>
@@ -54,7 +62,7 @@ const fleet = ref([
                   v-model="formData.vehicle"
                   placeholder="Select Vehicle"
                   size="large"
-                  style="width: 240px"
+                  style="width: 200px"
               >
                 <el-option
                     v-for="item in fleet"

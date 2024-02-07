@@ -99,7 +99,7 @@
     <div class="flex flex-col gap-4">
 
       <el-input v-model="searchPart" size="large"
-                class="w-[400px]"
+                class="w-[250px]"
                 placeholder="Search Vehicle Part" clearable />
 
       <el-scrollbar ref="scrollbarRef"  height="450px" always @scroll="scroll">
