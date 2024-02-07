@@ -105,11 +105,12 @@
       <el-scrollbar ref="scrollbarRef"  height="350px" always @scroll="scroll">
         <div ref="innerRef" class="flex flex-wrap gap-4" >
           <el-card v-for="item in vehicleParts"
-              class="box-card w-[250px]">
+              class="box-card w-[250px] cursor-pointer">
             <template #header>
               <div class="flex items-start flex-col justify-start gap-2">
-                <span>{{item?.name}}</span>
+                <span class="font-bold">{{item?.name}}</span>
                 <el-tag size="large"
+                        class=""
                         v-if="item.status ==='Healthy'"
                         type="success">{{item?.status}}
                 </el-tag>
@@ -120,14 +121,18 @@
                 </el-tag>
               </div>
             </template>
-            <img class="h-[150px]"
-                       :src="item?.imageLink"
-                       style="background-color: white; color: black"/>
-            <template #footer>
-              <div class="w-full flex justify-end">
-                <el-button type="primary" plain>View</el-button>
-              </div>
-            </template>
+<!--            <img class="h-[150px]"-->
+<!--                       :src="item?.imageLink"-->
+<!--                       style="background-color: white; color: black"/>-->
+            <el-text class="w-150px mb-2" truncated title="Prompt and seamless throttle response.">
+              Smooth acceleration: Prompt and seamless throttle response.
+            </el-text>
+            <el-text class="w-150px mb-2" truncated title="Steady and stable idle speed.">
+              Consistent idling: Steady and stable idle speed.
+            </el-text>
+            <el-text class="w-150px mb-2" truncated title="Clean emissions within limits.">
+              Minimal exhaust emissions: Clean emissions within limits.
+            </el-text>
           </el-card>
 
         </div>
