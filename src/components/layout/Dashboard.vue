@@ -23,7 +23,7 @@ const fleet = ref([
 <template>
   <el-container class="h-screen">
     <el-container>
-      <el-aside class=""
+      <el-aside class="sm:hidden md:flex"
                 style="padding: 7px"
           width="200px">
         <div class="w-full flex flex-col items-center h-full">
