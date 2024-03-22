@@ -1,19 +1,31 @@
 import { createRouter, createWebHistory } from "vue-router";
 import FleetHealth from "@/pages/fleet/FleetHealth.vue";
 import Notifications from "@/pages/notifications/Notifications.vue";
+import LoginPage from "@/pages/auth/LoginPage.vue";
+import Registration from "@/pages/auth/Registration.vue";
 
 
 const routes = [
     {
         name:'home',
-        path:'/',
+        path:'/home',
         component: FleetHealth
     },
     {
         name:'notifications',
         path:'/notifications',
         component: Notifications
-    }
+    },
+    {
+        name:'login',
+        path:'/',
+        component: LoginPage
+    },
+    {
+        name:'register',
+        path:'/register',
+        component: Registration
+    },
 ]
 
 const router = createRouter({

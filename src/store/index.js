@@ -1,4 +1,10 @@
 import { createStore } from 'vuex'
+import {raiseServerError, showSuccess} from "../utils/functions";
+import api from "../utils/api";
+import {headers} from "../utils/constants";
+export const baseUrl = "http://localhost:8000/api/"
+
+
 export default createStore({
     state: {
 
