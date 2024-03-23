@@ -1,13 +1,11 @@
 <script setup>
 import RouterLinks from "@/components/RouterLinks.vue";
 import {ref} from "vue";
+import store from "@/store/index.js";
 
 const profilePhotoUrl = 'https://source.unsplash.com/featured/?profile';
 const formData = ref({
-  vehicle : {
-    label:'G Wagon KBV459X',
-    value: 1
-  }
+
 })
 
 const menuDialog = ref(false)
@@ -16,12 +14,19 @@ const toggleMenuDialog = ()=>{
 }
 
 
-const fleet = ref([
-  {
-    label:'G Wagon KBV459X',
-    value: 1
-  }
-]);
+const fleet = ref({});
+
+const getFleet = ()=>{
+  store.dispatch('fetchList', {url: 'vehicle/'}).then((res)=>{
+    fleet.value = res?.data?.results
+  })
+}
+getFleet()
+
+const setVehicleDetails = ()=>{
+  console.log(formData.value.vehicle )
+  store.commit('setVehicleDetails',formData.value.vehicle )
+}
 
 </script>
 
@@ -80,15 +85,16 @@ const fleet = ref([
 
               <el-select
                   v-model="formData.vehicle"
+                  @change="setVehicleDetails"
                   placeholder="Select Vehicle"
                   size="large"
                   style="width: 200px"
               >
                 <el-option
                     v-for="item in fleet"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
+                    :key="item.id"
+                    :label="item?.vehicle_plate_number"
+                    :value="item"
                 />
               </el-select>
 

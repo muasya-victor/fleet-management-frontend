@@ -6,15 +6,12 @@
   import {ArrowDownIcon} from "@heroicons/vue/16/solid";
 
   const fleet = ref([
-    {
-      label:'G Wagon KBV459X',
-      value: 1
-    }
+
   ]);
 
   const getFleet = ()=>{
     store.dispatch('fetchList', {url: 'vehicle/'}).then((res)=>{
-      console.log(res.data)
+      fleet.value = res?.data?.results
     })
   }
   const downloadReport = ()=>{
@@ -38,10 +35,7 @@
   getFleet()
 
   const formData = ref({
-    vehicle : {
-      label:'G Wagon KBV459X',
-      value: 1
-    }
+
   })
 
   const searchPart = ref(null)
@@ -101,6 +95,8 @@
   const formatTooltip = (value: number) => {
     return `${value} px`
   }
+
+
 </script>
 
 <template>
@@ -152,9 +148,9 @@
                     >
                       <el-option
                           v-for="item in fleet"
-                          :key="item.value"
-                          :label="item.label"
-                          :value="item.value"
+                          :key="item.id"
+                          :label="item?.vehicle_plate_number"
+                          :value="item?.id"
                       />
                     </el-select>
                   </el-form-item>
@@ -192,9 +188,17 @@
           </el-tabs>
         </template>
       </el-dialog>
+      {{store?.getters?.getVehicleDetails}}
+
 
       <div class="w-full py-2 px-4 flex justify-between items-center bg-white rounded">
-        <el-tag size="large" type="success" class="text-md">Your Moti is Healthy</el-tag>
+
+        <el-tag v-if="store?.getters?.getVehicleDetails?.vehicle_general_condition === 'healthy'" size="large"
+                type="success" class="text-md">Your Moti is Healthy</el-tag>
+
+        <el-tag v-if="store?.getters?.getVehicleDetails?.vehicle_general_condition && store?.getters?.getVehicleDetails?.vehicle_general_condition !== 'healthy'"
+                size="large"
+                type="warning" class="text-md">Your Moti Needs Service</el-tag>
 
         <div class="flex gap-2 items-center w-fit">
           <div class="flex flex-col gap-1 text-hbr-primary">

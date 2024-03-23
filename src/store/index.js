@@ -7,13 +7,17 @@ export const baseUrl = "http://localhost:8000/api/"
 
 export default createStore({
     state: {
-
+        vehicleDetails: null
     },
     getters: {
-
+        getVehicleDetails(state){
+            return state.vehicleDetails
+        }
     },
     mutations: {
-
+        setVehicleDetails(state, payload){
+            state.vehicleDetails = payload
+        }
     },
     actions: {
         /**
