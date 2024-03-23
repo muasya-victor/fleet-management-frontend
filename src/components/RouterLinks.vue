@@ -18,7 +18,7 @@ const navigateToSelectedPage = (index)=>{
           @select="navigateToSelectedPage"
       >
         <el-menu-item index="home">Home</el-menu-item>
-        <el-menu-item index="notifications">Notifications</el-menu-item>
+<!--        <el-menu-item index="notifications">Notifications</el-menu-item>-->
         <el-sub-menu >
           <template #title>
 <!--            <el-icon><location /></el-icon>-->

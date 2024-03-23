@@ -2,7 +2,8 @@
   import {ref, onMounted  } from 'vue';
   import {ElScrollbar} from "element-plus";
   import store from "../../store/index"
-  import Dashboard from "@/components/layout/Dashboard.vue";
+  import Dashboard from "../../components/layout/Dashboard.vue";
+  import {ArrowDownIcon} from "@heroicons/vue/16/solid";
 
   const fleet = ref([
     {
@@ -16,6 +17,24 @@
       console.log(res.data)
     })
   }
+  const downloadReport = ()=>{
+    store.dispatch('fetchList', {url: 'pdf-report/'}).then((res)=>{
+      console.log(res.data)
+      const blob = new Blob([res.data], { type: 'application/pdf' });
+
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = 'vehicle_report.pdf';
+
+      document.body.appendChild(link);
+      link.click();
+
+      document.body.removeChild(link);
+    })
+        .catch(error => {
+          console.error('Error generating PDF:', error);
+        });
+    }
   getFleet()
 
   const formData = ref({
@@ -185,6 +204,14 @@
         </div>
       </div>
       <div class="flex flex-col gap-4">
+        <el-button type="danger"
+                   @click="downloadReport"
+                   class="w-fit" size="large" plain>
+          <el-icon class="mr-2">
+            <ArrowDownIcon/>
+          </el-icon>
+          Report
+        </el-button>
 
         <el-input v-model="searchPart" size="large"
                   class="w-[250px]"
