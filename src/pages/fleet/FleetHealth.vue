@@ -4,6 +4,7 @@
   import store from "../../store/index"
   import Dashboard from "../../components/layout/Dashboard.vue";
   import {ArrowDownIcon} from "@heroicons/vue/16/solid";
+  import router from "../../routes/index"
 
   const fleet = ref([
 
@@ -39,42 +40,24 @@
   })
 
   const searchPart = ref(null)
-  // const vehicleParts = ref({})
-  const vehicleParts =  ref(
-      [
-        {
-          id: 1,
-          name: 'Engine',
-          imageLink: 'https://source.unsplash.com/featured/?engine',
-          status: 'Healthy',
-        },
-        {
-          id: 2,
-          name: 'Transmission',
-          imageLink: 'https://source.unsplash.com/featured/?transmission',
-          status: 'Healthy',
-        },
-        {
-          id: 3,
-          name: 'Brake System',
-          imageLink: 'https://source.unsplash.com/featured/?brakes',
-          status: 'Healthy',
-        },
-        {
-          id: 4,
-          name: 'Tires',
-          imageLink: 'https://source.unsplash.com/featured/?tires',
-          status: 'Healthy',
-        },
-      ]
-  )
+  const vehiclePart = ref({})
+
+  const getVehicleParts = ()=>{
+    store.dispatch('fetchList', {url: 'vehicle-part/'}).then((res)=>{
+      vehiclePart.value = res?.data?.results
+    })
+  }
+  getVehicleParts()
+
   const activeName = ref('first')
   const serviceDialog = ref(false)
 
   const check_by_part = ref({})
 
-  const toggleServiceDialog = ()=>{
-    serviceDialog.value = !serviceDialog.value
+  const toggleServiceDialog = (id)=>{
+    // serviceDialog.value = !serviceDialog.value
+    console.log(id)
+    router.push({name: 'editVehiclePart', params: {partId: id}})
   }
 
   const max = ref(0)
@@ -182,7 +165,11 @@
 
 
 
+
+
                 </el-form>
+
+
               </div>
             </el-tab-pane>
           </el-tabs>
@@ -206,63 +193,52 @@
             <p>{{new Date().toDateString()}}</p>
           </div>
         </div>
-      </div>
-      <div class="flex flex-col gap-4">
+
         <el-button type="danger"
                    @click="downloadReport"
                    class="w-fit" size="large" plain>
           <el-icon class="mr-2">
             <ArrowDownIcon/>
           </el-icon>
-          Report
+          Vehicle Report
         </el-button>
+      </div>
+      <div class="flex flex-col gap-4">
+
 
         <el-input v-model="searchPart" size="large"
-                  class="w-[250px]"
+                  class="w-[250px] hidden"
                   placeholder="Search Vehicle Part" clearable />
 
-        <el-scrollbar ref="scrollbarRef"  height="450px" always @scroll="scroll">
-          <div ref="innerRef" class="flex flex-wrap gap-4" >
-            <el-card v-for="item in vehicleParts"
-                     @click="toggleServiceDialog"
-                     class="box-card w-[200px] cursor-pointer">
-              <template #header>
-                <div class="flex items-start flex-col justify-start gap-2">
-                  <span class="font-bold">{{item?.name}}</span>
-                  <el-tag size="large"
-                          class=""
-                          v-if="item.status ==='Healthy'"
-                          type="success">{{item?.status}}
-                  </el-tag>
-                  <el-tag
-                      size="large"
-                      type="warning"
-                      v-else>{{item?.status}}
-                  </el-tag>
-                </div>
-              </template>
-              <!--            <img class="h-[150px]"-->
-              <!--                       :src="item?.imageLink"-->
-              <!--                       style="background-color: white; color: black"/>-->
-              <el-text class="w-150px mb-2" truncated title="Prompt and seamless throttle response.">
-                Smooth acceleration: Prompt and seamless throttle response.
-              </el-text>
-              <el-text class="w-150px mb-2" truncated title="Steady and stable idle speed.">
-                Consistent idling: Steady and stable idle speed.
-              </el-text>
-              <el-text class="w-150px mb-2" truncated title="Clean emissions within limits.">
-                Minimal exhaust emissions: Clean emissions within limits.
-              </el-text>
-            </el-card>
+        <div ref="innerRef" class="flex flex-wrap gap-4" >
+          <el-card v-for="item in vehiclePart"
+                   @click="toggleServiceDialog(item?.id)"
+                   class="box-card w-[200px] cursor-pointer">
+            <template #header>
+              <div class="flex items-start flex-col justify-start gap-2">
+                <span class="font-bold">{{item?.vehicle_part_name}}</span>
+                <el-tag size="large"
+                        class=""
+                        v-if="item?.vehicle_part_working_condition === true"
+                        type="success">Healthy
+                </el-tag>
+                <el-tag
+                    size="large"
+                    type="warning"
+                    v-else> Needs To be checked
+                </el-tag>
+              </div>
+            </template>
+            <!--            <img class="h-[150px]"-->
+            <!--                       :src="item?.imageLink"-->
+            <!--                       style="background-color: white; color: black"/>-->
+            <el-text class="w-150px mb-2" truncated :title="item?.vehicle_part_comments">
+              {{item?.vehicle_part_comments}}
+            </el-text>
 
-          </div>
-        </el-scrollbar>
-        <el-slider
-            v-model="value"
-            :max="max"
-            :format-tooltip="formatTooltip"
-            @input="inputSlider"
-        />
+          </el-card>
+
+        </div>
       </div>
 
     </div>

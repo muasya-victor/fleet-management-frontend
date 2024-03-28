@@ -3,6 +3,7 @@ import FleetHealth from "@/pages/fleet/FleetHealth.vue";
 import Notifications from "@/pages/notifications/Notifications.vue";
 import LoginPage from "@/pages/auth/LoginPage.vue";
 import Registration from "@/pages/auth/Registration.vue";
+import EditVehiclePart from "../pages/fleet/components/EditVehiclePart.vue";
 
 
 const routes = [
@@ -25,6 +26,11 @@ const routes = [
         name:'register',
         path:'/register',
         component: Registration
+    },
+    {
+        name:'editVehiclePart',
+        path:'/edit/:partId',
+        component: EditVehiclePart
     },
 ]
 
