@@ -82,21 +82,31 @@ const setVehicleDetails = ()=>{
               <p class="text-gray-600 ">We are happy to have you</p>
             </div>
             <div class="flex items-center gap-10 justify-between w-fit">
+              <div class="flex gap-2 items-center">
+                <el-select
+                    v-model="formData.vehicle"
+                    @change="setVehicleDetails"
+                    placeholder="Select Vehicle"
+                    size="large"
+                    style="width: 200px"
+                >
+                  <el-option
+                      v-for="item in fleet"
+                      :key="item.id"
+                      :label="item?.vehicle_plate_number"
+                      :value="item"
+                  />
+                </el-select>
 
-              <el-select
-                  v-model="formData.vehicle"
-                  @change="setVehicleDetails"
-                  placeholder="Select Vehicle"
-                  size="large"
-                  style="width: 200px"
-              >
-                <el-option
-                    v-for="item in fleet"
-                    :key="item.id"
-                    :label="item?.vehicle_plate_number"
-                    :value="item"
-                />
-              </el-select>
+                <el-button size="large" title="add vehicle">
+                  <el-icon>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                  </el-icon>
+                </el-button>
+              </div>
+
 
 
               <el-avatar class=""

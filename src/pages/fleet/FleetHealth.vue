@@ -123,6 +123,7 @@
 
                 <el-form label-position="top">
                   <el-form-item label="Vehicle">
+
                     <el-select
                         v-model="formData.vehicle"
                         placeholder="Select Vehicle"
@@ -175,7 +176,6 @@
           </el-tabs>
         </template>
       </el-dialog>
-      {{store?.getters?.getVehicleDetails}}
 
 
       <div class="w-full py-2 px-4 flex justify-between items-center bg-white rounded">

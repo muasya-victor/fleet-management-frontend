@@ -1,39 +1,51 @@
 <script setup lang="ts">
 
-import Dashboard from "../../../components/layout/Dashboard.vue";
 import {reactive, ref} from "vue"
-import {LockClosedIcon, UserIcon} from "@heroicons/vue/24/solid/index.js";
-import store from "../../../store/index.js";
+import store from "../../store/index.js";
 import {FormInstance, FormRules} from "element-plus";
-import router from "../../../routes/index"
-import BaseDialog from "../../../components/BaseDialog.vue";
+import router from "../../routes/index"
+import {UserIcon} from "@heroicons/vue/24/solid";
 
-const dialogVisible = ref(true)
 const loading = ref(false)
 const form = ref({})
-const handleClose = ()=>{
 
-}
 
 const ruleFormRef = ref<FormInstance>();
 const rules = reactive<FormRules>({
 
 });
 
+
+const vehicleParts = ref([])
 const getVehiclePart = ()=>{
-  store.dispatch('fetchSingleItem', {url: 'vehicle-part', id: 1})
+  store.dispatch('fetchList', {url: 'vehicle-part'})
       .then((res)=>{
         console.log(res?.data)
-        form.value = {...res?.data}
+        vehicleParts.value = res?.data?.results
       })
 }
+
+const vehicleOwners = ref([])
+const getVehicleOwners = ()=>{
+  store.dispatch('fetchList', {url: 'user', id: 1})
+      .then((res)=>{
+        console.log(res?.data)
+        res?.data?.results?.forEach((user)=>{
+          if (user?.user_type !== 'mechanic'){
+            vehicleOwners.value.push(user)
+          }
+        })
+
+      })
+}
+getVehicleOwners()
 
 const handleSubmit = async (formEl: FormInstance | undefined) => {
   loading.value = true;
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
     if (valid) {
-      store.dispatch('patchData', {url: 'vehicle-part', id: 1, data: form.value})
+      store.dispatch('postData', {url: 'vehicle', data: form.value})
           .then((res) => {
             console.log(res?.data)
             loading.value = false
@@ -67,28 +79,69 @@ getVehiclePart()
 
     <h2 class="font-bold text-gray-400">Edit Vhehicle Part</h2>
 
-    <el-form-item label="Part Name" prop="vehicle_part_name">
+
+
+    <el-form-item label="Owner's Name" prop="vehicle_owner">
+      <el-select
+          v-model="form.vehicle_owner"
+          placeholder="Select Vehicle"
+          size="large"
+      >
+        <el-option
+            v-for="item in vehicleOwners"
+            :key="item.id"
+            :label="item?.user_first_name +' - ' + item?.user_type"
+            :value="item"
+        />
+      </el-select>
+    </el-form-item>
+
+    <el-form-item label="Vehicle Parts Registered" prop="vehicle_parts">
+      <el-select
+          v-model="form.vehicle_parts"
+          placeholder="Select Vehicle"
+          size="large"
+          multiple
+      >
+        <el-option
+            v-for="item in vehicleParts"
+            :key="item?.id"
+            :label="item?.vehicle_part_name"
+            :value="item?.id"
+        />
+      </el-select>
+    </el-form-item>
+    <el-form-item label="Vehicle Type" prop="vehicle_type">
       <el-input
-          v-model="form.vehicle_part_name"
-          placeholder="part name"
+          v-model="form.vehicle_type"
+          placeholder="saloon"
           size="large"
           type="text"
       />
     </el-form-item>
-
-    <el-form-item label="Comments on Condition" prop="vehicle_part_comments">
+    <el-form-item label="Vehicle Model" prop="vehicle_model">
       <el-input
-          v-model="form.vehicle_part_comments"
-          placeholder="comment on working condition"
+          v-model="form.vehicle_model"
+          placeholder="mercedes"
           size="large"
-          type="textarea"
+          type="text"
       />
     </el-form-item>
-    <el-form-item label="Password" prop="password">
-      <el-radio-group v-model="form.vehicle_part_working_condition" size="large">
-        <el-radio-button label="Is In Good Working Condition" :value="true" />
-        <el-radio-button label="Requires Repair" :value="false" />
-      </el-radio-group>
+    <el-form-item label="Vehicle Engine Number" prop="vehicle_engine_number">
+      <el-input
+          v-model="form.vehicle_engine_number"
+          placeholder="1308r"
+          size="large"
+          type="text"
+      />
+    </el-form-item>
+    <el-form-item label="Vehicle Color" prop="vehicle_color">
+      <el-input
+          v-model="form.vehicle_color"
+          placeholder="white"
+          size="large"
+          type="text"
+      />
     </el-form-item>
     <!--            <el-input-->
     <div class="flex w-full flex-wrap justify-end">

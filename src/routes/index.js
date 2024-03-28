@@ -4,6 +4,9 @@ import Notifications from "@/pages/notifications/Notifications.vue";
 import LoginPage from "@/pages/auth/LoginPage.vue";
 import Registration from "@/pages/auth/Registration.vue";
 import EditVehiclePart from "../pages/fleet/components/EditVehiclePart.vue";
+import Index from "../pages/fleet/components/Index.vue";
+import AddEditVehicle from "../pages/fleet/AddEditVehicle.vue";
+import AddVehicleWraper from "../pages/fleet/AddVehicleWraper.vue";
 
 
 const routes = [
@@ -30,7 +33,12 @@ const routes = [
     {
         name:'editVehiclePart',
         path:'/edit/:partId',
-        component: EditVehiclePart
+        component: Index
+    },
+    {
+        name:'addVehicle',
+        path:'/add-vehicle',
+        component: AddVehicleWraper
     },
 ]
 
