@@ -1,16 +1,17 @@
 <script setup>
 import {ref} from "vue";
+import router from "../routes/index.js";
 
 const dialogVisible = ref(true)
 const handleClose = ()=>{
-
+  router.go(-1)
 }
 </script>
 
 <template>
   <el-dialog
       v-model="dialogVisible"
-      title="Tips"
+      title=" "
       width="800"
       :before-close="handleClose"
   >

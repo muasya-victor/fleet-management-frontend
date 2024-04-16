@@ -33,7 +33,6 @@
           console.error('Error generating PDF:', error);
         });
     }
-  getFleet()
 
   const formData = ref({
 
@@ -47,7 +46,6 @@
       vehiclePart.value = res?.data?.results
     })
   }
-  getVehicleParts()
 
   const activeName = ref('first')
   const serviceDialog = ref(false)
@@ -65,9 +63,9 @@
   const innerRef = ref<HTMLDivElement>()
   const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
 
-  onMounted(() => {
-    max.value = innerRef.value!.clientHeight - 30
-  })
+  // onMounted(() => {
+  //   max.value = innerRef.value!.clientHeight - 30
+  // })
 
   const inputSlider = (value: number) => {
     scrollbarRef.value!.setScrollTop(value)
@@ -79,11 +77,22 @@
     return `${value} px`
   }
 
+  router.beforeEach((to, from, next) => {
+    console.log('Route changed:', from.fullPath, '->', to.fullPath);
+    getVehicleParts()
+    next();
+  });
 
+onMounted(()=>{
+  getFleet()
+  getVehicleParts()
+
+})
 </script>
 
 <template>
   <Dashboard>
+    <router-view/>
     <div class="flex flex-col gap-4">
 
       <el-dialog v-model="serviceDialog" title="Shipping address" class="sm:w-[350px] md:w-[800px]">

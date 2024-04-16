@@ -1,12 +1,9 @@
 <script setup lang="ts">
 
-import Dashboard from "../../../components/layout/Dashboard.vue";
-import {reactive, ref} from "vue"
-import {LockClosedIcon, UserIcon} from "@heroicons/vue/24/solid/index.js";
+import {onMounted, reactive, ref} from "vue"
 import store from "../../../store/index.js";
 import {FormInstance, FormRules} from "element-plus";
-import router from "../../../routes/index"
-import BaseDialog from "../../../components/BaseDialog.vue";
+import {useRouter} from "vue-router";
 
 const dialogVisible = ref(true)
 const loading = ref(false)
@@ -15,13 +12,16 @@ const handleClose = ()=>{
 
 }
 
+const router = ref(useRouter())
+
 const ruleFormRef = ref<FormInstance>();
 const rules = reactive<FormRules>({
 
 });
+const paramPartId = ref(router.value?.currentRoute?.params?.partId)
 
 const getVehiclePart = ()=>{
-  store.dispatch('fetchSingleItem', {url: 'vehicle-part', id: 1})
+  store.dispatch('fetchSingleItem', {url: 'vehicle-part', id: paramPartId.value})
       .then((res)=>{
         console.log(res?.data)
         form.value = {...res?.data}
@@ -33,20 +33,25 @@ const handleSubmit = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
     if (valid) {
-      store.dispatch('patchData', {url: 'vehicle-part', id: 1, data: form.value})
+      store.dispatch('patchData', {url: 'vehicle-part', id: paramPartId.value, data: form.value})
           .then((res) => {
             console.log(res?.data)
             loading.value = false
             form.value = {...res?.data}
-            router.go(-1)
+            router.value.go(-1)
           })
           .catch((err)=>{
             loading.value = false
           })
     }})
 }
-getVehiclePart()
 
+
+
+
+onMounted(()=>{
+  getVehiclePart()
+})
 </script>
 
 <template>
@@ -64,6 +69,7 @@ getVehiclePart()
       </div>
       <h1 class="font-bold text-2xl">Edit Part</h1>
     </div>
+
 
     <h2 class="font-bold text-gray-400">Edit Vhehicle Part</h2>
 

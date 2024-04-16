@@ -7,6 +7,7 @@
         class="flex flex-col gap-4 w-4/12 h-fit"
         label-position="top"
     >
+      {{form}}
       <div class="flex gap-2 items-center">
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10">
@@ -88,6 +89,17 @@ const rules = reactive<FormRules>({
     message: "Please enter password",
   },
 });
+
+const getCurrentUser = ()=>{
+  store
+      .dispatch("fetchList", {
+        url: "current-user",
+      })
+      .then((resp) => {
+        localStorage.setItem("userData", JSON.stringify(resp.data));
+      });
+}
+
 const submitForm = async (formEl: FormInstance | undefined) => {
   loading.value = true;
   if (!formEl) return;
@@ -103,6 +115,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
           })
           .then((resp) => {
             localStorage.setItem("authData", JSON.stringify(resp.data));
+            getCurrentUser()
             router.push({ name: "home", replace: true });
           });
     } else {

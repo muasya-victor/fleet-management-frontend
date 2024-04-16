@@ -24,7 +24,7 @@ const navigateToSelectedPage = (index)=>{
 <!--            <el-icon><location /></el-icon>-->
             <span>Settings</span>
           </template>
-          <el-menu-item index="vehicle-details">Vehicle Details</el-menu-item>
+          <el-menu-item index="addVehicle">Add Vehicles</el-menu-item>
           <el-menu-item index="profile">Profile</el-menu-item>
         </el-sub-menu>
       </el-menu>

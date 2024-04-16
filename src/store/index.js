@@ -104,7 +104,7 @@ export default createStore({
             }
         },
         /**
-         * Ammend an object in the database.All fields are required. Payload = {url:string, id:number,data:object}
+         * Amend an object in the database.All fields are required. Payload = {url:string, id:number,data:object}
          * function
          * @param state
          * @param commit

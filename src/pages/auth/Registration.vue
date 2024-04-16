@@ -6,7 +6,6 @@
         :rules="rules"
         class="grid grid-cols-2 gap-4 w-8/12 h-fit"
         label-position="top"
-        @click="submitForm(loginFormRef)"
     >
       <div class="flex gap-2 items-center">
         <div>
@@ -22,7 +21,6 @@
       <el-form-item label="First Name" prop="user_first_name">
         <el-input
             v-model="form.user_first_name"
-            :prefix-icon="UserIcon"
             placeholder="username"
             size="large"
             type="text"
@@ -32,7 +30,6 @@
       <el-form-item label="Last Name" prop="user_last_name">
         <el-input
             v-model="form.user_last_name"
-            :prefix-icon="UserIcon"
             placeholder="last name"
             size="large"
             type="text"
@@ -41,7 +38,6 @@
       <el-form-item label="Username" prop="username">
         <el-input
             v-model="form.username"
-            :prefix-icon="UserIcon"
             placeholder="username"
             size="large"
             type="text"
@@ -81,6 +77,7 @@
             style="border-radius: 4px"
             type="primary"
             html-type="submit"
+            @click="submitForm(loginFormRef)"
         >
           Register
         </el-button>
@@ -138,7 +135,12 @@ const submitForm = async (formEl: FormInstance | undefined) => {
             data: form,
           })
           .then((resp) => {
-          });
+            loading.value = false
+          })
+          .catch(err=>{
+            loading.value = false
+          })
+      ;
     } else {
     }
   });

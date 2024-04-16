@@ -3,17 +3,29 @@ import FleetHealth from "@/pages/fleet/FleetHealth.vue";
 import Notifications from "@/pages/notifications/Notifications.vue";
 import LoginPage from "@/pages/auth/LoginPage.vue";
 import Registration from "@/pages/auth/Registration.vue";
-import EditVehiclePart from "../pages/fleet/components/EditVehiclePart.vue";
 import Index from "../pages/fleet/components/Index.vue";
-import AddEditVehicle from "../pages/fleet/AddEditVehicle.vue";
 import AddVehicleWraper from "../pages/fleet/AddVehicleWraper.vue";
+import AddVehicleDialog from "../components/AddVehicleDialog.vue";
+import UserProfile from "../pages/auth/UserProfile.vue";
 
 
 const routes = [
     {
         name:'home',
         path:'/home',
-        component: FleetHealth
+        component: FleetHealth,
+        children : [
+            {
+                name:'new-vehicle',
+                path:'new-vehicle',
+                component: AddVehicleDialog
+            },
+            {
+                name:'editVehiclePart',
+                path:'edit/:partId',
+                component: Index
+            },
+        ]
     },
     {
         name:'notifications',
@@ -31,15 +43,17 @@ const routes = [
         component: Registration
     },
     {
-        name:'editVehiclePart',
-        path:'/edit/:partId',
-        component: Index
+        name:'profile',
+        path:'/profile',
+        component: UserProfile
     },
+
     {
         name:'addVehicle',
         path:'/add-vehicle',
         component: AddVehicleWraper
     },
+
 ]
 
 const router = createRouter({

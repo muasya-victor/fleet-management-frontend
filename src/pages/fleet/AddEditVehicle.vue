@@ -81,7 +81,7 @@ getVehiclePart()
 
 
 
-    <el-form-item label="Owner's Name" prop="vehicle_owner">
+    <el-form-item label="Owner's Name" prop="vehicle_owner" >
       <el-select
           v-model="form.vehicle_owner"
           placeholder="Select Vehicle"
@@ -91,7 +91,7 @@ getVehiclePart()
             v-for="item in vehicleOwners"
             :key="item.id"
             :label="item?.user_first_name +' - ' + item?.user_type"
-            :value="item"
+            :value="item?.id"
         />
       </el-select>
     </el-form-item>
@@ -101,7 +101,6 @@ getVehiclePart()
           v-model="form.vehicle_parts"
           placeholder="Select Vehicle"
           size="large"
-          multiple
       >
         <el-option
             v-for="item in vehicleParts"
@@ -111,6 +110,7 @@ getVehiclePart()
         />
       </el-select>
     </el-form-item>
+
     <el-form-item label="Vehicle Type" prop="vehicle_type">
       <el-input
           v-model="form.vehicle_type"
@@ -119,6 +119,16 @@ getVehiclePart()
           type="text"
       />
     </el-form-item>
+
+    <el-form-item label="Vehicle Plate Number" prop="vehicle_plate_number">
+      <el-input
+          v-model="form.vehicle_plate_number"
+          placeholder="kbv465k"
+          size="large"
+          type="text"
+      />
+    </el-form-item>
+
     <el-form-item label="Vehicle Model" prop="vehicle_model">
       <el-input
           v-model="form.vehicle_model"
@@ -127,6 +137,7 @@ getVehiclePart()
           type="text"
       />
     </el-form-item>
+
     <el-form-item label="Vehicle Engine Number" prop="vehicle_engine_number">
       <el-input
           v-model="form.vehicle_engine_number"
@@ -135,6 +146,7 @@ getVehiclePart()
           type="text"
       />
     </el-form-item>
+
     <el-form-item label="Vehicle Color" prop="vehicle_color">
       <el-input
           v-model="form.vehicle_color"
