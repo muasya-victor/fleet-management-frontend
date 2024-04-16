@@ -62,11 +62,13 @@ getVehiclePart()
 </script>
 
 <template>
+  <h2 class="font-bold text-gray-400">Edit Vhehicle Part</h2>
+
   <el-form
       ref="ruleFormRef"
       :model="form"
       :rules="rules"
-      class="flex flex-col gap-4 w-full h-fit"
+      class="grid grid-cols-2 gap-4 w-full h-fit"
       label-position="top">
     <div class="flex gap-2 items-center hidden">
       <div>
@@ -77,7 +79,6 @@ getVehiclePart()
       <h1 class="font-bold text-2xl">Edit Part</h1>
     </div>
 
-    <h2 class="font-bold text-gray-400">Edit Vhehicle Part</h2>
 
 
 

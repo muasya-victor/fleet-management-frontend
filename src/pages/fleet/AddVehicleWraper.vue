@@ -7,7 +7,7 @@ import Dashboard from "../../components/layout/Dashboard.vue";
 <template>
   <Dashboard>
     <div class="w-full mx-auto py-2">
-      <div class="w-5/12 mx-auto">
+      <div class="w-full mx-auto">
         <AddEditVehicle />
       </div>
     </div>

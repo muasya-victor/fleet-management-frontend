@@ -7,7 +7,6 @@
         class="flex flex-col gap-4 w-4/12 h-fit"
         label-position="top"
     >
-      {{form}}
       <div class="flex gap-2 items-center">
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10">

@@ -112,7 +112,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       store
           .dispatch("patchData", {
             url: "user",
-            id: 1,
+            id: form.value.id,
             data: {
               id: form.value?.id,
               ...form.value
